@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+data/
+demo-data/
+demo-export.csv
+.venv/
+*.tmp
