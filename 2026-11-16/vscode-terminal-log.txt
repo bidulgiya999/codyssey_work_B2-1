@@ -1,0 +1,261 @@
+PS C:\Users\1234v\Desktop\calculator> C:\Users\1234v\Desktop\calculator
+C:\Users\1234v\Desktop\calculator : 'C:\Users\1234v\Desktop\calcu
+lator' 용어가 cmdlet, 함수, 스크립트 파일 또는 실행할 수 있는 프
+로그램 이름으로 인식되지 않습니다. 이름이 정확한지 확인하고 경로
+가 포함된 경우 경로가 올바른지 검증한 다음 다시 시도하십시오.
+위치 줄:1 문자:1
++ C:\Users\1234v\Desktop\calculator
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Users\1234v\De 
+   sktop\calculator:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PS C:\Users\1234v\Desktop\calculator> PS C:\Users\1234v\Desktop\calculator>
+PS : 이름이 "C:\Users\1234v\Desktop\calculator>"인 프로세스를 찾
+을 수 없습니다. 프로세스 이름을 검증하고 다시 cmdlet을 호출하십시
+오.
+위치 줄:1 문자:1
++ PS C:\Users\1234v\Desktop\calculator>
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Users\1234v\De 
+   sktop\calculator>:String) [Get-Process], ProcessCommandExcep  
+  tion
+    + FullyQualifiedErrorId : NoProcessFoundForGivenName,Microso 
+   ft.PowerShell.Commands.GetProcessCommand
+ 
+PS C:\Users\1234v\Desktop\calculator> $ledgerPython = 'C:\Users\1234v\AppData\Roaming\uv\python\cpython-3.15-windows-x86_64-none\python.exe'
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m budget_app --help
+usage: python.exe -m budget_app [-h] [--data-dir DATA_DIR]
+                                [--verbose]
+                                {add,list,search,summary,update,delete,budget,category,import,export,backup} ...
+
+데이터를 안전하게 저장하는 콘솔 가계부
+
+positional arguments:
+  {add,list,search,summary,update,delete,budget,category,import,export,backup}
+    add                 대화형 거래 추가
+    list                날짜 최신순 목록
+    search              조건을 모두 만족하는 거래 검색
+    summary             월별 요약과 지출 TOP N
+    update              옵션 방식으로 거래 수정
+    delete              거래 삭제
+    budget              월 예산 설정/조회
+    category            카테고리 관리
+    import              UTF-8 CSV 일괄 등록 (실패 시 전체 취소)
+    export              기간 조건을 지정해 CSV 내보내기
+    backup              타임스탬프 ZIP 백업 생성
+
+options:
+  -h, --help            show this help message and exit
+  --data-dir DATA_DIR   저장 폴더 (기본: ./data), 명령 앞에 지정
+  --verbose             명령 실행 시간/종료 코드 로그 출력
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m budget_app add
+등록된 카테고리: food, transport, rent, salary, etc
+날짜(YYYY-MM-DD): & $ledgerPython -m budget_app add
+타입(income/expense): income
+카테고리: salary
+금액(양수 정수): 3000000
+메모(선택): 이번달 월급
+태그(쉼표 구분, 선택): 기타
+[오류] 날짜 형식 오류
+[힌트] YYYY-MM-DD 형식으로 입력하세요. 예: 2024-01-15
+PS C:\Users\1234v\Desktop\calculator> 2026-11-16
+1999
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m budget_app add
+등록된 카테고리: food, transport, rent, salary, etc
+날짜(YYYY-MM-DD): 2026-11-16
+타입(income/expense): income
+카테고리: salary
+금액(양수 정수): 3000000
+메모(선택): 이번달 월급
+태그(쉼표 구분, 선택): 기타
+[저장 완료] id=TX-abb2b71e8a52460bb617fecc6f345a2e
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m budget_app list --limit 5
+ID | 날짜 | 타입 | 카테고리 | 금액 | 메모 | 태그
+TX-abb2b71e8a52460bb617fecc6f345a2e | 2026-11-16 | income  | salary       |  3,000,000 | 이번달 월급 | 기타
+[조회] 1건
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m budget_app search --from 2026-11-01 --to 2026-11-30 --category salary --type income
+ID | 날짜 | 타입 | 카테고리 | 금액 | 메모 | 태그
+TX-abb2b71e8a52460bb617fecc6f345a2e | 2026-11-16 | income  | salary       |  3,000,000 | 이번달 월급 | 기타
+[조회] 1건
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m budget_app search --q 월급 --tag 기타
+ID | 날짜 | 타입 | 카테고리 | 금액 | 메모 | 태그
+TX-abb2b71e8a52460bb617fecc6f345a2e | 2026-11-16 | income  | salary       |  3,000,000 | 이번달 월급 | 기타
+[조회] 1건
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m budget_app add
+등록된 카테고리: food, transport, rent, salary, etc
+날짜(YYYY-MM-DD): 2026-11-16
+타입(income/expense): expense
+카테고리: food
+금액(양수 정수): 15000
+메모(선택): 점심
+태그(쉼표 구분, 선택): meal,work
+[저장 완료] id=TX-699cbe9e3570482c8f9c48ab35060b9c
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m budget_app budget set --month 2026-11 --amount 10000
+[저장 완료] 2026-11 예산 10,000원
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m budget_app summary --month 2026-11 --top 3
+총 수입: 3,000,000원
+총 지출: 15,000원
+잔액: 2,985,000원
+예산: 10,000원 (사용률 150.0%)
+[경고] 예산 초과: 5,000원
+지출 TOP 3
+1) food 15,000원
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m budget_app list --limit 5
+ID | 날짜 | 타입 | 카테고리 | 금액 | 메모 | 태그
+TX-abb2b71e8a52460bb617fecc6f345a2e | 2026-11-16 | income  | salary       |  3,000,000 | 이번달 월급 | 기타
+TX-699cbe9e3570482c8f9c48ab35060b9c | 2026-11-16 | expense | food         |     15,000 | 점심 | meal,work
+[조회] 2건
+PS C:\Users\1234v\Desktop\calculator> $expenseId = '여기에_지출_id_붙여넣기'
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m budget_app update --id $expenseId --amount 12000 --memo 저녁
+[오류] 없는 데이터: 여기에_지출_id_붙여넣기
+[힌트] list 또는 search로 거래 id를 확인하세요.
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m budget_app list --limit 5
+ID | 날짜 | 타입 | 카테고리 | 금액 | 메모 | 태그
+TX-abb2b71e8a52460bb617fecc6f345a2e | 2026-11-16 | income  | salary       |  3,000,000 | 이번달 월급 | 기타
+TX-699cbe9e3570482c8f9c48ab35060b9c | 2026-11-16 | expense | food         |     15,000 | 점심 | meal,work
+[조회] 2건
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m budget_app update --id $expenseId --amount 0
+[오류] 없는 데이터: 여기에_지출_id_붙여넣기
+[힌트] list 또는 search로 거래 id를 확인하세요.
+PS C:\Users\1234v\Desktop\calculator> $expenseId = 'TX-699cbe9e3570482c8f9c48ab35060b9c'
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m budget_app update --id $expenseId --amount 12000 --memo 저녁
+[수정 완료] id=TX-699cbe9e3570482c8f9c48ab35060b9c
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m budget_app list --limit 5
+ID | 날짜 | 타입 | 카테고리 | 금액 | 메모 | 태그
+TX-abb2b71e8a52460bb617fecc6f345a2e | 2026-11-16 | income  | salary       |  3,000,000 | 이번달 월급 | 기타
+TX-699cbe9e3570482c8f9c48ab35060b9c | 2026-11-16 | expense | food         |     12,000 | 저녁 | meal,work
+[조회] 2건
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m budget_app update --id $expenseId --amount 0
+[오류] 금액/개수는 양수 정수여야 합니다.
+[힌트] 1~9223372036854775807 범위의 정수를 입력하세요.
+PS C:\Users\1234v\Desktop\calculator> $LASTEXITCODE
+1
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m budget_app list --limit 5
+ID | 날짜 | 타입 | 카테고리 | 금액 | 메모 | 태그
+TX-abb2b71e8a52460bb617fecc6f345a2e | 2026-11-16 | income  | salary       |  3,000,000 | 이번달 월급 | 기타
+TX-699cbe9e3570482c8f9c48ab35060b9c | 2026-11-16 | expense | food         |     12,000 | 저녁 | meal,work
+[조회] 2건
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m budget_app category add
+카테고리명: hobby
+[저장 완료] category=hobby
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m budget_app category list
+- etc
+- food
+- hobby
+- rent
+- salary
+- transport
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m budget_app category remove
+삭제할 카테고리명: hobby
+[삭제 완료] category=hobby
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m budget_app category list
+- etc
+- food
+- rent
+- salary
+- transport
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m budget_app category remove 
+삭제할 카테고리명: food
+[오류] 사용 중인 카테고리는 삭제할 수 없습니다.
+[힌트] 해당 거래를 수정하거나 삭제한 뒤 다시 시도하세요.
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m budget_app export --out evaluation.csv --month 2026-11
+[완료] evaluation.csv (2 records)
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m budget_app import --from examples/import.csv
+[완료] imported=3, skipped=0
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m budget_app search --from 2024-01-01 --to 2024-01-31
+ID | 날짜 | 타입 | 카테고리 | 금액 | 메모 | 태그
+TX-1f599062ce0842c8afe6888ed9eca328 | 2024-01-15 | expense | food         |     15,000 | 점심 | meal,work
+TX-f3ca1e5f7fa34ff48d6328c00fbd54ed | 2024-01-10 | expense | transport    |     20,000 | 교통카드 | commute
+TX-4a553dba74074b46b3806c18af7b0df1 | 2024-01-01 | income  | salary       |  3,000,000 | 월급 | salary
+[조회] 3건
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m budget_app list --limit 10
+ID | 날짜 | 타입 | 카테고리 | 금액 | 메모 | 태그
+TX-abb2b71e8a52460bb617fecc6f345a2e | 2026-11-16 | income  | salary       |  3,000,000 | 이번달 월급 | 기타
+TX-699cbe9e3570482c8f9c48ab35060b9c | 2026-11-16 | expense | food         |     12,000 | 저녁 | meal,work
+TX-1f599062ce0842c8afe6888ed9eca328 | 2024-01-15 | expense | food         |     15,000 | 점심 | meal,work
+TX-f3ca1e5f7fa34ff48d6328c00fbd54ed | 2024-01-10 | expense | transport    |     20,000 | 교통카드 | commute
+TX-4a553dba74074b46b3806c18af7b0df1 | 2024-01-01 | income  | salary       |  3,000,000 | 월급 | salary
+[조회] 5건
+PS C:\Users\1234v\Desktop\calculator> $expenseId = 'TX-699cbe9e3570482c8f9c48ab35060b9c'
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m budget_app delete --id $expenseId
+[삭제 완료] id=TX-699cbe9e3570482c8f9c48ab35060b9c
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m budget_app list --limit 10
+ID | 날짜 | 타입 | 카테고리 | 금액 | 메모 | 태그
+TX-abb2b71e8a52460bb617fecc6f345a2e | 2026-11-16 | income  | salary       |  3,000,000 | 이번달 월급 | 기타
+TX-1f599062ce0842c8afe6888ed9eca328 | 2024-01-15 | expense | food         |     15,000 | 점심 | meal,work
+TX-f3ca1e5f7fa34ff48d6328c00fbd54ed | 2024-01-10 | expense | transport    |     20,000 | 교통카드 | commute
+TX-4a553dba74074b46b3806c18af7b0df1 | 2024-01-01 | income  | salary       |  3,000,000 | 월급 | salary
+[조회] 4건
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m budget_app delete --id $expenseId
+[오류] 없는 데이터: TX-699cbe9e3570482c8f9c48ab35060b9c
+[힌트] list 또는 search로 거래 id를 확인하세요.
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m budget_app backup
+[백업 완료] C:\Users\1234v\Desktop\calculator\data\backups\backup-20261116-184529-828882-57c6b64b.zip
+PS C:\Users\1234v\Desktop\calculator> [백업 완료] ...\data\backups\backup-날짜-시각-고유값.zip
+위치 줄:1 문자:4
++ [백업 완료] ...\data\backups\backup-날짜-시각-고유값.zip
++    ~
+특성 또는 형식 리터럴 끝에 ]가 없습니다.
+위치 줄:1 문자:5
++ [백업 완료] ...\data\backups\backup-날짜-시각-고유값.zip
++     ~~~
+식 또는 문에서 예기치 않은 '완료]' 토큰입니다.
+    + CategoryInfo          : ParserError: (:) [], ParentContain 
+   sErrorRecordException
+    + FullyQualifiedErrorId : EndSquareBracketExpectedAtEndOfAtt 
+   ribute
+ 
+PS C:\Users\1234v\Desktop\calculator> Get-ChildItem .\data\backups
+
+
+
+    디렉터리: C:\Users\1234v\Desktop\calculator\data\backups
+
+
+Mode                 LastWriteTime         Length Name           
+----                 -------------         ------ ----           
+-a----      2026-11-16   오후 6:45            769 backup-20261116
+                                                  -184529-828882-
+                                                  57c6b64b.zip   
+
+
+PS C:\Users\1234v\Desktop\calculator> & $ledgerPython -m unittest discover -s tests -v
+test_add_persists_and_streams_in_date_order (test_budget_app.BudgetTests.test_add_persists_and_streams_in_date_order) ... ok
+test_atomic_write_failure_does_not_truncate_original (test_budget_app.BudgetTests.test_atomic_write_failure_does_not_truncate_original) ... ok
+test_backup_contains_all_persistent_files (test_budget_app.BudgetTests.test_backup_contains_all_persistent_files) ... ok
+test_category_usage_and_duplicate_guard (test_budget_app.BudgetTests.test_category_usage_and_duplicate_guard) ... ok
+test_cli_budget_category_and_search (test_budget_app.BudgetTests.test_cli_budget_category_and_search) ... ok
+test_cli_error_and_cancel_have_no_traceback (test_budget_app.BudgetTests.test_cli_error_and_cancel_have_no_traceback) ... ok
+test_cli_update_delete_export_import_and_backup (test_budget_app.BudgetTests.test_cli_update_delete_export_import_and_backup) ... ok
+test_corruption_during_rewrite_preserves_original (test_budget_app.BudgetTests.test_corruption_during_rewrite_preserves_original) ... ok
+test_delete_and_missing_id (test_budget_app.BudgetTests.test_delete_and_missing_id) ... ok
+test_empty_categories_reinitialized (test_budget_app.BudgetTests.test_empty_categories_reinitialized) ... ok
+test_empty_summary_still_shows_budget (test_budget_app.BudgetTests.test_empty_summary_still_shows_budget) ... ok
+test_export_range_and_empty_header (test_budget_app.BudgetTests.test_export_range_and_empty_header) ... ok
+test_export_requires_period_and_protects_data (test_budget_app.BudgetTests.test_export_requires_period_and_protects_data) ... ok
+test_failed_update_preserves_bytes (test_budget_app.BudgetTests.test_failed_update_preserves_bytes) ... ok
+test_import_and_export_roundtrip_unicode_quotes_and_tags (test_budget_app.BudgetTests.test_import_and_export_roundtrip_unicode_quotes_and_tags) ... ok
+test_import_bad_headers_unknown_category_and_bad_encoding (test_budget_app.BudgetTests.test_import_bad_headers_unknown_category_and_bad_encoding) ... ok
+test_import_invalid_later_row_rolls_back_everything (test_budget_app.BudgetTests.test_import_invalid_later_row_rolls_back_everything) ... ok
+test_initialization_creates_three_files_and_defaults (test_budget_app.BudgetTests.test_initialization_creates_three_files_and_defaults) ... ok
+test_interactive_add_and_list_limit (test_budget_app.BudgetTests.test_interactive_add_and_list_limit) ... ok
+test_invalid_category_and_type_do_not_write (test_budget_app.BudgetTests.test_invalid_category_and_type_do_not_write) ... ok
+test_invalid_dates_and_amounts (test_budget_app.BudgetTests.test_invalid_dates_and_amounts) ... ok
+test_invalid_filters (test_budget_app.BudgetTests.test_invalid_filters) ... ok
+test_invalid_schema_and_sort_order_are_reported (test_budget_app.BudgetTests.test_invalid_schema_and_sort_order_are_reported) ... ok
+test_limit_does_not_read_entire_transaction_file (test_budget_app.BudgetTests.test_limit_does_not_read_entire_transaction_file) ... ok
+test_lock_blocks_second_command_and_cleans_up (test_budget_app.BudgetTests.test_lock_blocks_second_command_and_cleans_up) ... ok
+test_optional_csv_columns_and_bom (test_budget_app.BudgetTests.test_optional_csv_columns_and_bom) ... ok
+test_search_combines_all_conditions_inclusively (test_budget_app.BudgetTests.test_search_combines_all_conditions_inclusively) ... ok
+test_subprocess_entrypoint_exit_codes_and_all_help (test_budget_app.BudgetTests.test_subprocess_entrypoint_exit_codes_and_all_help) ... ok
+test_summary_budget_and_warning (test_budget_app.BudgetTests.test_summary_budget_and_warning) ... ok
+test_update_reorders_and_clears_optional_fields (test_budget_app.BudgetTests.test_update_reorders_and_clears_optional_fields) ... ok
+
+----------------------------------------------------------------------
+Ran 30 tests in 3.204s
+
+OK
+PS C:\Users\1234v\Desktop\calculator> $LASTEXITCODE
+0
+PS C:\Users\1234v\Desktop\calculator> 
