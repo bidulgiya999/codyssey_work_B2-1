@@ -4,6 +4,15 @@ VS Code의 PowerShell 터미널에서 거래 추가부터 전체 자동 테스�
 
 프로그램 소스는 저장소 루트의 [budget_app](../budget_app)에 있습니다. 아래 명령은 `budget_app`이 있는 프로젝트 루트에서 실행합니다. 이 문서가 있는 `2026-11-16` 폴더 안에서 실행하는 것이 아닙니다. 전체 기능과 저장 구조는 [기존 README](../README.md)를 참고하세요.
 
+## VS Code 명령어와 JSONL·CSV 학습 자료
+
+- [명령어 모음집](./명령어_모음집.md): PowerShell 시작, HELP, 명령별 기능·사용 상황·옵션과 실제 입력 방법
+- [왜 & $ledgerPython -m으로 실행하나요?](./명령어_모음집.md#2-왜-python-대신-앞에-기호와-변수를-붙이나요): Python 경로 변수, 호출 연산자, 모듈 실행의 의미
+- [JSONL과 CSV란](./JSONL과%20CSV란/README.md): 내부 세 저장 파일과 교환 CSV의 구조·차이·장단점·선택 이유
+- [구조 학습용 예시 파일](./JSONL과%20CSV란/예시): 거래·카테고리·예산 JSONL 및 거래 CSV
+
+자료는 VS Code의 PowerShell 터미널과 기존 calculator 루트 실행을 기준으로 합니다. 2026-11-16 실습 자료 폴더에 이어 추가한 안내이며, 이전 실습의 실제 실행 원문은 그대로 보존합니다.
+
 ## Python 주석 코드와 한 줄 설명 바로 보기
 
 - [주석이 달린 Python 파일 9개](./주석코드/README.md): 이 날짜 폴더 안에서 실제 코드를 열 수 있습니다.
@@ -838,3 +847,4 @@ storage.py의 atomic_text()에서 다음 순서로 처리합니다.
 | [service.py](../budget_app/service.py) | 거래·예산·카테고리 업무 규칙 |
 | [storage.py](../budget_app/storage.py) | JSONL 스트리밍, 잠금, 임시 파일과 원자적 교체 |
 | [decorators.py](../budget_app/decorators.py) | 공통 오류 처리, 종료 코드, 실행 시간 로그 |
+
